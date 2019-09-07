@@ -31,3 +31,6 @@ The name of colors may change with increasing/decreasing number of clusters. Thi
 
 ## Future Scope
 I am working on creating an API of the program and deploy it using Android App. 
+
+## Contribution
+Feel free to fork and submit bug fixes or new features. You can file bugs, suggestions, and feature requests through issues page.

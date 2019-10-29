@@ -29,8 +29,7 @@ Android Developers, Web Developers or anyone looking to replicate a template fac
 ## Shortcomings
 The name of colors may change with increasing/decreasing number of clusters. This is because the program uses the center of clusters to calculate the hex codes. For color names, it looks up in a JSON containing hexcodes and respective color names. If it is not able to find hex code in the JSON, it finds the nearest hex code (using Euclidean distance) and returns the name of that hex code. When we increase/decrease the number of clusters, the center of cluster changes. Because of that, hex code changes and eventually, the nearest hex code/color name.
 
-## Future Scope
-I am working on creating an API of the program and deploy it using Android App. 
+Please find the Android App deployment of the program : https://play.google.com/store/apps/details?id=com.proxima.colorpixor
 
 ## Contribution
 Feel free to fork and submit bug fixes or new features. You can file bugs, suggestions, and feature requests through issues page.

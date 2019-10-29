@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  2 19:47:09 2019
 
-@author: agilist
+@author: nandini
 """
 
 """
@@ -42,7 +42,7 @@ parser.add_argument("--imagepath", help="Path to input image")
 
 args = parser.parse_args()
 
-IMG_PATH = args.imagepath if args.imagepath else "images/yellow-rose.jpg"
+IMG_PATH = args.imagepath if args.imagepath else "images/poster.jpg"
 CLUSTERS = args.clusters if args.clusters else 5
 WIDTH = 128
 HEIGHT = 128
@@ -125,6 +125,7 @@ def TrainKMeans(img):
     image = img.resize((new_width, new_height), Image.ANTIALIAS)
     img_array = np.array(image)
     img_vector = img_array.reshape((img_array.shape[0] * img_array.shape[1], 3))
+    print("IMG VECTOR ", img_vector)
     '''
     ----------
     Training K-Means Clustering Algorithm
@@ -133,7 +134,6 @@ def TrainKMeans(img):
     kmeans = KMeans(n_clusters = CLUSTERS, random_state=0)
     labels = kmeans.fit_predict(img_vector)
     
-    label_counts = Counter(labels)
     hex_colors = [rgb_to_hex(center) for center in kmeans.cluster_centers_]
     color_name = {}
     for c in kmeans.cluster_centers_:
@@ -154,18 +154,19 @@ def TrainKMeans(img):
     cluster_map['color'] = [hex_colors[x] for x in cluster_map['cluster']]
     cluster_map['color_name'] = [color_name[x] for x in cluster_map['color']]
     print(cluster_map)
-    return cluster_map, hex_colors, label_counts, kmeans
+    return cluster_map, kmeans
     
     
 
 def plotColorClusters(img):
-    cluster_map, hex_colors, label_counts, kmeans = TrainKMeans(img)
+    cluster_map, kmeans = TrainKMeans(img)
     fig = plt.figure()
     ax = Axes3D(fig)
     
     # grouping the data by color hex code and color name to find the total count of
     # pixels (data points) in a particular cluster
     mydf = cluster_map.groupby(['color', 'color_name']).agg({'position':'count'}).reset_index().rename(columns={"position":"count"})
+    mydf['Percentage'] = round((mydf['count']/mydf['count'].sum())*100, 1)
     print(mydf)
     
     # Plotting a scatter plot for all the clusters and their respective colors
